@@ -74,7 +74,7 @@ export class TelegramActionService {
         { name: 'Vehiculo 5', action: 'vehiculo5' },
         { name: 'Vehiculo 6', action: 'vehiculo6' },
         { name: 'Vehiculo 7', action: 'vehiculo7' },
-        { name: 'Vehiculo 8', action: 'vehiculo8' },
+        // { name: 'Vehiculo 8', action: 'vehiculo8' },
       ];
       const message =
         'Sección en construcción.' +
@@ -107,31 +107,142 @@ export class TelegramActionService {
   }
 
   async handleActionVehiculo(ctx) {
+    const btns = [
+      { name: 'Exploración', action: 'tipomision1' },
+      { name: 'Recolección', action: 'tipomision2' },
+    ];
+
     const selectedVehicle = ctx.callbackQuery.data; // Obtener el vehículo seleccionado
     console.log('Vehículo seleccionado:', selectedVehicle);
 
     // Tomar decisiones basadas en el vehículo seleccionado
-    switch (selectedVehicle) {
-      case 'vehiculo1':
-        // Lógica para el Vehículo 1
-        console.log('Vehículo 1');
+    // switch (selectedVehicle) {
+    //   case 'vehiculo1':
+    //     // Lógica para el Vehículo 1
+    //     console.log('Vehículo 1');
 
-        break;
-      case 'vehiculo2':
-        // Lógica para el Vehículo 2
-        console.log('Vehículo 2');
+    //     break;
+    //   case 'vehiculo2':
+    //     // Lógica para el Vehículo 2
+    //     console.log('Vehículo 2');
 
-        break;
-      case 'vehiculo3':
-        // Lógica para el Vehículo 3
-        console.log('Vehículo 3');
+    //     break;
+    //   case 'vehiculo3':
+    //     // Lógica para el Vehículo 3
+    //     console.log('Vehículo 3');
 
-        break;
-      default:
-        console.log('Vehículo no reconocido.');
-    }
+    //     break;
+    //   default:
+    //     console.log('Vehículo no reconocido.');
+    // }
 
     // Otros pasos que puedas necesitar realizar después de seleccionar un vehículo
+
+    try {
+      const message =
+        'Sección en construcción.' +
+        '\nSelección del tipo de misión en base al vehículo seleccionado.';
+
+      btns.push({ name: `◀️ Atras`, action: `main` });
+      const keyboard = Markup.inlineKeyboard(
+        btns.reduce((acc, btn, index) => {
+          if (index === btns.length - 1) {
+            acc.push([Markup.button.callback(btn.name, btn.action)]);
+          } else {
+            const rowIndex = Math.floor(index / 3); // Calcular la fila actual
+            if (index % 3 === 0) {
+              acc.push([]); // Agregar una nueva fila
+            }
+            acc[rowIndex].push(Markup.button.callback(btn.name, btn.action));
+          }
+          return acc;
+        }, []),
+      );
+
+      await ctx.answerCbQuery();
+      await this.updateMessage(ctx, message, keyboard);
+    } catch (error) {
+      this.handleExceptions(error);
+    }
+  }
+
+  async handleActionTipoMision(ctx) {
+    const btns = [
+      { name: 'Destino 1', action: 'destino1' },
+      { name: 'Destino 2', action: 'destino2' },
+      { name: 'Destino 3', action: 'destino3' },
+      { name: 'Destino 4', action: 'destino4' },
+      { name: 'Destino 5', action: 'destino5' },
+    ];
+
+    const selectedTipoMision = ctx.callbackQuery.data; // Obtener el vehículo seleccionado
+    console.log('Mision seleccionada:', selectedTipoMision);
+
+    // Otros pasos que puedas necesitar realizar después de seleccionar un vehículo
+
+    try {
+      const message =
+        'Sección en construcción.' +
+        '\nSeleccion del destino para llevar a cabo la misión.';
+
+      btns.push({ name: `◀️ Atras`, action: `main` });
+      const keyboard = Markup.inlineKeyboard(
+        btns.reduce((acc, btn, index) => {
+          if (index === btns.length - 1) {
+            acc.push([Markup.button.callback(btn.name, btn.action)]);
+          } else {
+            const rowIndex = Math.floor(index / 3); // Calcular la fila actual
+            if (index % 3 === 0) {
+              acc.push([]); // Agregar una nueva fila
+            }
+            acc[rowIndex].push(Markup.button.callback(btn.name, btn.action));
+          }
+          return acc;
+        }, []),
+      );
+
+      await ctx.answerCbQuery();
+      await this.updateMessage(ctx, message, keyboard);
+    } catch (error) {
+      this.handleExceptions(error);
+    }
+  }
+
+  async handleActionDestino(ctx) {
+    const btns = [];
+
+    const selectedDestino = ctx.callbackQuery.data; // Obtener el vehículo seleccionado
+    console.log('Destino seleccionado:', selectedDestino);
+
+    // Otros pasos que puedas necesitar realizar después de seleccionar un vehículo
+
+    try {
+      const message =
+        'Sección en construcción.' +
+        '\nLa misión ha iniciado de forma satisfactoria.' +
+        '\nAhora debe esperar a que el Vehículo regrese de la misión.';
+
+      btns.push({ name: `◀️ Atras`, action: `main` });
+      const keyboard = Markup.inlineKeyboard(
+        btns.reduce((acc, btn, index) => {
+          if (index === btns.length - 1) {
+            acc.push([Markup.button.callback(btn.name, btn.action)]);
+          } else {
+            const rowIndex = Math.floor(index / 3); // Calcular la fila actual
+            if (index % 3 === 0) {
+              acc.push([]); // Agregar una nueva fila
+            }
+            acc[rowIndex].push(Markup.button.callback(btn.name, btn.action));
+          }
+          return acc;
+        }, []),
+      );
+
+      await ctx.answerCbQuery();
+      await this.updateMessage(ctx, message, keyboard);
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
   private async updateMessage(ctx, message, keyboard) {

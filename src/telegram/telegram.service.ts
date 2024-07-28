@@ -59,6 +59,12 @@ export class TelegramService {
     this.bot.action(/vehiculo\d/, async (ctx) =>
       this.telegramActionService.handleActionVehiculo(ctx),
     );
+    this.bot.action(/tipomision\d/, async (ctx) =>
+      this.telegramActionService.handleActionTipoMision(ctx),
+    );
+    this.bot.action(/destino\d/, async (ctx) =>
+      this.telegramActionService.handleActionDestino(ctx),
+    );
   }
 
   public startBot() {

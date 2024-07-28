@@ -9,8 +9,8 @@ export class TelegramHearsService {
     // Crear los botones
     const keyboard = Markup.inlineKeyboard([
       Markup.button.callback('Colonia Común', 'colonia'),
-      Markup.button.callback('Hábitat', 'OPTION_2'),
-      Markup.button.callback('Misiones', 'OPTION_3'),
+      Markup.button.callback('Hábitat', 'habitat'),
+      Markup.button.callback('Misiones', 'mision'),
     ]);
 
     // Enviar el mensaje con los botones

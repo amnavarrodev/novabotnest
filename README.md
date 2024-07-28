@@ -33,6 +33,20 @@ $ yarn run start:prod
 
 ```
 
+## Git
+
+```bash
+git add .
+git commit -m "Primer commit"
+git remote add origin https://github.com/amnavarrodev/######.git
+git branch -M main
+git push -u origin main
+
+git add .
+git commit -m "Segundo commit"
+git push
+```
+
 ## Support
 
 
