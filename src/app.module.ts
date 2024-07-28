@@ -7,6 +7,7 @@ import { TelegramCommandService } from './telegram-command/telegram-command.serv
 import { TelegramCommandModule } from './telegram-command/telegram-command.module';
 import { TelegramHearsModule } from './telegram-hears/telegram-hears.module';
 import { TelegramActionModule } from './telegram-action/telegram-action.module';
+// import { TelegramBotProvider } from './common/telegram-bot.provider';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { TelegramActionModule } from './telegram-action/telegram-action.module';
     TelegramActionModule,
   ],
   providers: [
+    // TelegramBotProvider,
     TelegramActionService,
     TelegramHearsService,
     TelegramCommandService,
