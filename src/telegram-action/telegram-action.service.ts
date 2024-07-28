@@ -68,22 +68,36 @@ export class TelegramActionService {
     try {
       const vehiculos = [
         { name: 'Rover', action: 'vehiculo1' },
-        // { name: 'Vehiculo 2', action: 'vehiculo2' },
+        { name: 'Vehiculo 2', action: 'vehiculo2' },
         { name: 'Vehiculo 3', action: 'vehiculo3' },
+        { name: 'Vehiculo 4', action: 'vehiculo4' },
+        { name: 'Vehiculo 5', action: 'vehiculo5' },
+        { name: 'Vehiculo 6', action: 'vehiculo6' },
+        { name: 'Vehiculo 7', action: 'vehiculo7' },
+        { name: 'Vehiculo 8', action: 'vehiculo8' },
       ];
       const message =
         'Sección en construcción.' +
         '\nMuy pronto se mostrarán los datos de las Misiones aquí.' +
         '\nSeleccione el Vehículo a utilizar en la misión.';
 
-      const keyboard = Markup.inlineKeyboard([
-        [
-          ...vehiculos.map((vehiculo) =>
-            Markup.button.callback(vehiculo.name, vehiculo.action),
-          ),
-        ],
-        [Markup.button.callback('◀️ Atras', 'main')],
-      ]);
+      vehiculos.push({ name: `◀️ Atras`, action: `main` });
+      const keyboard = Markup.inlineKeyboard(
+        vehiculos.reduce((acc, vehiculo, index) => {
+          if (index === vehiculos.length - 1) {
+            acc.push([Markup.button.callback(vehiculo.name, vehiculo.action)]);
+          } else {
+            const rowIndex = Math.floor(index / 3); // Calcular la fila actual
+            if (index % 3 === 0) {
+              acc.push([]); // Agregar una nueva fila
+            }
+            acc[rowIndex].push(
+              Markup.button.callback(vehiculo.name, vehiculo.action),
+            );
+          }
+          return acc;
+        }, []),
+      );
 
       await ctx.answerCbQuery();
       await this.updateMessage(ctx, message, keyboard);
